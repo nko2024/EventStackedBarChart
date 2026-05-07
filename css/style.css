@@ -1,0 +1,248 @@
+/* ===================================== */
+/* BASE */
+/* ===================================== */
+
+body {
+  margin: 0;
+  padding: 20px;
+  background: transparent;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #0f172a;
+}
+
+/* ===================================== */
+/* SHELL */
+/* ===================================== */
+
+.viz-shell {
+  width: 100%;
+}
+
+.viz-card {
+  background: #ffffff;
+
+  border: 1px solid #f1f5f9;
+
+  border-radius: 20px;
+
+  padding: 24px;
+
+  box-shadow:
+    0 12px 24px rgba(0,0,0,0.06);
+}
+
+/* ===================================== */
+/* HEADER */
+/* ===================================== */
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+
+  margin-bottom: 20px;
+}
+
+.chart-eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #2f6ea5;
+
+  margin-bottom: 10px;
+}
+
+.chart-title {
+  font-size: 32px;
+  line-height: 1.1;
+  font-weight: 800;
+  margin: 0;
+}
+
+/* KPI */
+.chart-kpi {
+  text-align: right;
+}
+
+.chart-kpi-value {
+  font-size: 32px;
+  font-weight: 800;
+  color: #16a34a;
+  line-height: 1;
+}
+
+.chart-kpi-label {
+  font-size: 13px;
+  color: #64748b;
+  margin-top: 8px;
+}
+
+/* ===================================== */
+/* DESCRIPTION */
+/* ===================================== */
+
+.chart-description {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #475569;
+
+  margin-bottom: 30px;
+}
+
+/* ===================================== */
+/* SVG */
+/* ===================================== */
+
+#chart svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* ===================================== */
+/* STACKED BAR */
+/* ===================================== */
+
+.segment {
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.segment:hover {
+  opacity: 0.9;
+}
+
+/* Labels */
+.segment-label {
+  fill: white;
+  font-weight: 700;
+  pointer-events: none;
+}
+
+/* Impact labels */
+.value-label {
+  fill: #334155;
+  font-weight: 700;
+}
+
+/* ===================================== */
+/* TOOLTIP */
+/* ===================================== */
+
+.tooltip {
+  position: absolute;
+
+  background: #0f172a;
+  color: white;
+
+  padding: 12px 14px;
+
+  font-size: 13px;
+  line-height: 1.5;
+
+  border-radius: 10px;
+
+  pointer-events: none;
+
+  opacity: 0;
+
+  transition: opacity 0.2s ease;
+
+  box-shadow:
+    0 12px 32px rgba(0,0,0,0.18);
+
+  max-width: 260px;
+
+  z-index: 1000;
+}
+
+/* ===================================== */
+/* RESPONSIVE */
+/* ===================================== */
+
+@media (max-width: 900px) {
+
+  .chart-header {
+    flex-direction: column;
+  }
+
+  .chart-kpi {
+    text-align: left;
+  }
+
+  .chart-title {
+    font-size: 28px;
+  }
+
+}
+
+/* ===================================== */
+/* BAR CHART */
+/* ===================================== */
+
+.bar {
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.bar:hover {
+  opacity: 0.92;
+}
+
+/* Axis */
+.axis path {
+  stroke: #cbd5e1;
+}
+
+.axis line {
+  stroke: #e2e8f0;
+}
+
+.axis text {
+  fill: #475569;
+}
+
+/* Grid */
+.grid line {
+  stroke: #e2e8f0;
+  stroke-opacity: 0.8;
+  shape-rendering: crispEdges;
+}
+
+.grid path {
+  stroke-width: 0;
+}
+
+/* Value Labels */
+.value-label {
+  fill: #334155;
+  font-weight: 700;
+}
+
+/* ===================================== */
+/* STACKED BAR */
+/* ===================================== */
+
+.segment {
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.segment:hover {
+  opacity: 0.92;
+}
+
+/* Event labels */
+.event-label {
+  letter-spacing: 0.1px;
+}
+
+/* Impact labels */
+.impact-label {
+  letter-spacing: 0.2px;
+}
