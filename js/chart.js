@@ -65,6 +65,19 @@ const svg = d3.select("#chart")
   .attr("transform", `translate(${margin.left},${margin.top})`);
 
 // =====================================
+// SVG BACKGROUND
+// =====================================
+
+svg.append("rect")
+  .attr("x", -margin.left)
+  .attr("y", -margin.top)
+  .attr("width", width + margin.left + margin.right)
+  .attr("height", height + margin.top + margin.bottom)
+  .attr("fill", "#ffffff")
+  .attr("rx", 18)
+  .attr("ry", 18);
+
+// =====================================
 // TOOLTIP
 // =====================================
 
@@ -163,20 +176,11 @@ segments.append("text")
 
   .attr("x", barX + barWidth + 18)
 
-  .attr("y", d => (y(d.y0) + y(d.y1)) / 2)
+  .attr("y", d => (y(d.y0) + y(d.y1)) / 2 - 8)
 
-  .attr("dominant-baseline", "middle")
-
-  .style("font-size", d => {
-
-    if (d.impact >= 50) return "16px";
-    if (d.impact >= 10) return "14px";
-
-    return "12px";
-
-  })
-
+  .style("font-size", "13px")
   .style("font-weight", "700")
+  .style("fill", "#1e293b")
 
   .style("opacity", 0)
 
@@ -184,6 +188,26 @@ segments.append("text")
 
   .transition()
   .delay(700)
+  .duration(500)
+  .style("opacity", 1);
+
+// Secondary impact label
+segments.append("text")
+  .attr("class", "event-subtext")
+
+  .attr("x", barX + barWidth + 18)
+
+  .attr("y", d => (y(d.y0) + y(d.y1)) / 2 + 12)
+
+  .style("font-size", "12px")
+  .style("fill", "#64748b")
+
+  .style("opacity", 0)
+
+  .text(d => `$${d.impact}M Economic Impact`)
+
+  .transition()
+  .delay(850)
   .duration(500)
   .style("opacity", 1);
 
