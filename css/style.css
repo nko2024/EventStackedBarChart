@@ -53,8 +53,13 @@ body {
 /* SVG */
 /* ===================================== */
 
+#chart {
+  width: 100%;
+  max-height: 500px;
+}
+
 #chart svg {
   width: 100%;
   height: auto;
-  overflow: visible;
+  display: block;
 }
