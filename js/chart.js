@@ -42,8 +42,8 @@ const data = [
 
 const margin = {
   top: 20,
-  right: 240,
-  bottom: 30,
+  right: 260,
+  bottom: 20,
   left: 40
 };
 
@@ -54,43 +54,15 @@ const height = 420 - margin.top - margin.bottom;
 // SVG
 // =====================================
 
-const svgRoot = d3.select("#chart")
+const svg = d3.select("#chart")
   .append("svg")
   .attr(
     "viewBox",
     `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`
   )
-  .attr("preserveAspectRatio", "xMidYMid meet");
-
-const svg = svgRoot
+  .attr("preserveAspectRatio", "xMidYMid meet")
   .append("g")
   .attr("transform", `translate(${margin.left},${margin.top})`);
-
-// =====================================
-// BACKGROUND PANEL
-// =====================================
-
-svg.append("rect")
-  .attr("x", -margin.left)
-  .attr("y", -margin.top)
-  .attr("width", width + margin.left + margin.right)
-  .attr("height", height + margin.top + margin.bottom)
-  .attr("fill", "#ffffff")
-  .attr("rx", 20)
-  .attr("ry", 20);
-
-// =====================================
-// SVG BACKGROUND
-// =====================================
-
-svg.append("rect")
-  .attr("x", -margin.left)
-  .attr("y", -margin.top)
-  .attr("width", width + margin.left + margin.right)
-  .attr("height", height + margin.top + margin.bottom)
-  .attr("fill", "#ffffff")
-  .attr("rx", 18)
-  .attr("ry", 18);
 
 // =====================================
 // TOOLTIP
@@ -146,8 +118,8 @@ data.forEach(d => {
 // BAR SETTINGS
 // =====================================
 
-const barX = 120;
-const barWidth = 110;
+const barX = 100;
+const barWidth = 90;
 
 // =====================================
 // SEGMENTS
@@ -164,14 +136,17 @@ const segments = svg.selectAll(".segment-group")
 
 segments.append("rect")
   .attr("class", "segment")
+
   .attr("x", barX)
 
   .attr("y", height)
+
   .attr("width", barWidth)
+
   .attr("height", 0)
 
-  .attr("rx", 12)
-  .attr("ry", 12)
+  .attr("rx", 10)
+  .attr("ry", 10)
 
   .attr("fill", (d, i) => color(i))
 
@@ -183,7 +158,7 @@ segments.append("rect")
   .attr("height", d => y(d.y0) - y(d.y1));
 
 // =====================================
-// EVENT LABELS
+// LABELS
 // =====================================
 
 segments.append("text")
@@ -191,11 +166,11 @@ segments.append("text")
 
   .attr("x", barX + barWidth + 18)
 
-  .attr("y", d => (y(d.y0) + y(d.y1)) / 2 - 8)
+  .attr("y", d => (y(d.y0) + y(d.y1)) / 2 - 6)
+
+  .attr("dominant-baseline", "middle")
 
   .style("font-size", "13px")
-  .style("font-weight", "700")
-  .style("fill", "#1e293b")
 
   .style("opacity", 0)
 
@@ -206,7 +181,6 @@ segments.append("text")
   .duration(500)
   .style("opacity", 1);
 
-// Secondary impact label
 segments.append("text")
   .attr("class", "event-subtext")
 
@@ -214,8 +188,9 @@ segments.append("text")
 
   .attr("y", d => (y(d.y0) + y(d.y1)) / 2 + 12)
 
+  .attr("dominant-baseline", "middle")
+
   .style("font-size", "12px")
-  .style("fill", "#64748b")
 
   .style("opacity", 0)
 
@@ -223,42 +198,6 @@ segments.append("text")
 
   .transition()
   .delay(850)
-  .duration(500)
-  .style("opacity", 1);
-
-// =====================================
-// VALUE LABELS
-// =====================================
-
-segments.append("text")
-  .attr("class", "impact-label")
-
-  .attr("x", barX + (barWidth / 2))
-
-  .attr("y", d => (y(d.y0) + y(d.y1)) / 2)
-
-  .attr("text-anchor", "middle")
-  .attr("dominant-baseline", "middle")
-
-  .style("font-size", d => {
-
-    if (d.impact >= 50) return "16px";
-    if (d.impact >= 10) return "13px";
-
-    return "11px";
-
-  })
-
-  .style("font-weight", "700")
-
-  .style("fill", "white")
-
-  .style("opacity", 0)
-
-  .text(d => `$${d.impact}M`)
-
-  .transition()
-  .delay(900)
   .duration(500)
   .style("opacity", 1);
 
