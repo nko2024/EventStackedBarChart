@@ -40,15 +40,15 @@ const data = [
 // DIMENSIONS
 // =====================================
 
-const width = 500;
-const height = 700;
-
 const margin = {
-  top: 30,
-  right: 180,
-  bottom: 40,
-  left: 90
+  top: 20,
+  right: 240,
+  bottom: 30,
+  left: 40
 };
+
+const width = 700 - margin.left - margin.right;
+const height = 420 - margin.top - margin.bottom;
 
 // =====================================
 // SVG
@@ -58,9 +58,11 @@ const svg = d3.select("#chart")
   .append("svg")
   .attr(
     "viewBox",
-    `0 0 ${width} ${height}`
+    `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`
   )
-  .attr("preserveAspectRatio", "xMidYMid meet");
+  .attr("preserveAspectRatio", "xMidYMid meet")
+  .append("g")
+  .attr("transform", `translate(${margin.left},${margin.top})`);
 
 // =====================================
 // TOOLTIP
@@ -77,12 +79,12 @@ const tooltip = d3.select("body")
 const total = d3.sum(data, d => d.impact);
 
 // =====================================
-// SCALES
+// SCALE
 // =====================================
 
 const y = d3.scaleLinear()
   .domain([0, total])
-  .range([height - margin.bottom, margin.top]);
+  .range([height, 0]);
 
 // =====================================
 // COLORS
@@ -99,7 +101,7 @@ const color = d3.scaleOrdinal([
 ]);
 
 // =====================================
-// BUILD STACK POSITIONS
+// STACK POSITIONS
 // =====================================
 
 let cumulative = 0;
@@ -113,11 +115,11 @@ data.forEach(d => {
 });
 
 // =====================================
-// BAR WIDTH
+// BAR SETTINGS
 // =====================================
 
 const barX = 120;
-const barWidth = 120;
+const barWidth = 110;
 
 // =====================================
 // SEGMENTS
@@ -126,8 +128,7 @@ const barWidth = 120;
 const segments = svg.selectAll(".segment-group")
   .data(data)
   .enter()
-  .append("g")
-  .attr("class", "segment-group");
+  .append("g");
 
 // =====================================
 // RECTANGLES
@@ -137,9 +138,7 @@ segments.append("rect")
   .attr("class", "segment")
   .attr("x", barX)
 
-  // Start from bottom
-  .attr("y", y(0))
-
+  .attr("y", height)
   .attr("width", barWidth)
   .attr("height", 0)
 
@@ -149,7 +148,7 @@ segments.append("rect")
   .attr("fill", (d, i) => color(i))
 
   .transition()
-  .duration(1200)
+  .duration(1000)
   .ease(d3.easeCubicOut)
 
   .attr("y", d => y(d.y1))
@@ -162,7 +161,7 @@ segments.append("rect")
 segments.append("text")
   .attr("class", "event-label")
 
-  .attr("x", barX + barWidth + 20)
+  .attr("x", barX + barWidth + 18)
 
   .attr("y", d => (y(d.y0) + y(d.y1)) / 2)
 
@@ -178,7 +177,6 @@ segments.append("text")
   })
 
   .style("font-weight", "700")
-  .style("fill", "#334155")
 
   .style("opacity", 0)
 
@@ -190,7 +188,7 @@ segments.append("text")
   .style("opacity", 1);
 
 // =====================================
-// VALUE LABELS INSIDE BAR
+// VALUE LABELS
 // =====================================
 
 segments.append("text")
@@ -213,6 +211,7 @@ segments.append("text")
   })
 
   .style("font-weight", "700")
+
   .style("fill", "white")
 
   .style("opacity", 0)
@@ -225,22 +224,7 @@ segments.append("text")
   .style("opacity", 1);
 
 // =====================================
-// TOTAL LABEL
-// =====================================
-
-svg.append("text")
-  .attr("x", barX + (barWidth / 2))
-  .attr("y", height - 10)
-  .attr("text-anchor", "middle")
-
-  .style("font-size", "14px")
-  .style("font-weight", "700")
-  .style("fill", "#475569")
-
-  .text(`Total Impact: $${total.toLocaleString()}M`);
-
-// =====================================
-// TOOLTIP INTERACTIONS
+// TOOLTIP
 // =====================================
 
 segments
