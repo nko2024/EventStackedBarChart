@@ -54,15 +54,30 @@ const height = 420 - margin.top - margin.bottom;
 // SVG
 // =====================================
 
-const svg = d3.select("#chart")
+const svgRoot = d3.select("#chart")
   .append("svg")
   .attr(
     "viewBox",
     `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`
   )
-  .attr("preserveAspectRatio", "xMidYMid meet")
+  .attr("preserveAspectRatio", "xMidYMid meet");
+
+const svg = svgRoot
   .append("g")
   .attr("transform", `translate(${margin.left},${margin.top})`);
+
+// =====================================
+// BACKGROUND PANEL
+// =====================================
+
+svg.append("rect")
+  .attr("x", -margin.left)
+  .attr("y", -margin.top)
+  .attr("width", width + margin.left + margin.right)
+  .attr("height", height + margin.top + margin.bottom)
+  .attr("fill", "#ffffff")
+  .attr("rx", 20)
+  .attr("ry", 20);
 
 // =====================================
 // SVG BACKGROUND
